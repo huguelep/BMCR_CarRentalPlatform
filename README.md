@@ -16,9 +16,10 @@ enable them to record and access information about reservations, customers, and 
 fleet of vehicles from each of the different branch locations. Their goal is to more
 effectively manage their assets whilst increasing revenue and customer satisfaction.
 
-
+![SampleScreenshot](https://github.com/huguelep/BMCR_CarRentalPlatform/blob/main/ReadmeImages/Screenshot.jpg)
 
 # Database Schema
+![DBSchema](https://github.com/huguelep/BMCR_CarRentalPlatform/blob/main/ReadmeImages/DatabaseSchema.jpg)
 
 # Entity-Relationship Diagram
 ![ERD](https://github.com/huguelep/BMCR_CarRentalPlatform/blob/main/ReadmeImages/ERD.jpg)
