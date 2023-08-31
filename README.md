@@ -21,5 +21,4 @@ effectively manage their assets whilst increasing revenue and customer satisfact
 # Database Schema
 
 # Entity-Relationship Diagram
-
-#
+![ERD](https://github.com/huguelep/BMCR_CarRentalPlatform/blob/main/ReadmeImages/ERD.jpg)
