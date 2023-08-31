@@ -1,5 +1,7 @@
 # BMCR - Car Rental Platform
 
+Technologies used: Express.js, Node.js, JavaScript, HTML/CSS, MariaDB
+
 # Overview:
 
 Beaver Motors Car Rental is a privately-owned small business that provides car rental
