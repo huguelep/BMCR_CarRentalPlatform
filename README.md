@@ -13,3 +13,11 @@ and states; the company is eager to implement a database management system that 
 enable them to record and access information about reservations, customers, and their
 fleet of vehicles from each of the different branch locations. Their goal is to more
 effectively manage their assets whilst increasing revenue and customer satisfaction.
+
+
+
+# Database Schema
+
+# Entity-Relationship Diagram
+
+#
