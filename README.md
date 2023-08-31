@@ -1,6 +1,7 @@
 # BMCR - Car Rental Platform
 
-Overview:
+# Overview:
+
 Beaver Motors Car Rental is a privately-owned small business that provides car rental
 services to Corvallis, Oregon and the surrounding areas. The company currently has five
 different branch locations bringing in approximately $5 million in total revenue with
