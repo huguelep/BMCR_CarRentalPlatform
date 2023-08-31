@@ -1,0 +1,165 @@
+<!--
+Adapted from CS340 Starter Application GitHub
+Safonte, D & Curry, M (May 2023)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%203%20-%20Integrating%20a%20Templating%20Engine%20(Handlebars)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%204%20-%20Dynamically%20Displaying%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%207%20-%20Dynamically%20Deleting%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%208%20-%20Dynamically%20Updating%20Data
+-->
+
+<!-- cardinformation.hbs -->
+
+<!-- Navigation -->
+<header>
+        <h1 class="sitename">BMCR Reservation Management System</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/reservations">Reservations</a>
+            <a href="/drivers">Drivers</a>
+            <a href="/cardinformation">Card Information</a>
+            <a href="/vehicles">Vehicles</a>
+            <a href="/branches">Branches</a>
+            <a href="/paymentmethods">Payment Methods</a>
+        </nav>
+</header>
+
+<!-- Display table and CRUD functionality -->
+<h1>Card Information</h1>
+
+<!-- Table displays results of the SELECT query -->
+<table id="card-information-table">
+     <thead>
+        <tr>
+            <th>Card Information ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Street Address</th>
+            <th>City Name</th>
+            <th>State Code</th>
+            <th>Zip Code</th>
+            <th>Card Number</th>
+            <th>Card Expiry Date</th>
+            <th>Security Code</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr data-value="{{this.Card_Info_ID}}">
+            <td class="Card_Info_ID">{{this.Card_Info_ID}}</td>
+            <td class="First_Name">{{this.First_Name}}</td>
+            <td class="Last_Name">{{this.Last_Name}}</td>
+            <td class="Street_Address">{{this.Street_Address}}</td>
+            <td class="City_Name">{{this.City_Name}}</td>
+            <td class="State_Code">{{this.State_Code}}</td>
+            <td class="ZIP_Code">{{this.ZIP_Code}}</td>
+            <td class="Card_Number">{{this.Card_Number}}</td>
+            <td class="Card_Expiry_Date">{{this.Card_Expiry_Date}}</td>
+            <td class="Security_Code">{{this.Security_Code}}</td>
+            <td class="Phone_Number">{{this.Phone_Number}}</td>
+            <td class="Email_Address">{{this.Email_Address}}</td>
+            <td><button onClick="updateCardInformation({{this.Card_Info_ID}}); showButton('updateCardInformationButton');" class="editButtons">Edit</button></td>
+            <td><button onclick="deleteCardInformation({{this.Card_Info_ID}})" class="cancelButtons">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<hr>
+
+<!-- Displays form for CREATE functionality -->
+<button onclick="showAdd('CardInformation')" class="addButtons">Add new Card Information</button>
+<button onClick="hideAdd('CardInformation')" class="cancelButtons">Cancel</button>
+<div id="insertCardInformation" style="display:none">
+    <br>
+    <form id="addCardInformationForm">
+        <legend><strong>Add new Card Information:</strong></legend>
+            <fieldset>
+                <label><strong>First Name:</strong></label><input type="text" id="insert_first_name" name="insert_first_name" required>
+                <label><strong>Last Name:</strong></label><input type="text" id="insert_last_name" name="insert_last_name" required>
+                <label><strong>Street Address:</strong></label><input type="text" id="insert_street_address" name="insert_street_address" required>
+                <label><strong>City Name:</strong></label><input type="text" id="insert_city_name" name="insert_city_name" required>
+                <br><br>
+                <label><strong>State Code:</strong></label><input type="text" id="insert_state_code" name="insert_state_code" required>
+                <label><strong>Zip Code:</strong></label><input type="text" id="insert_zip_code" name="insert_zip_code" required>
+                <label><strong>Card Number:</strong></label><input type="text" id="insert_card_number" name="insert_card_number" required>
+                <label><strong>Card Expiry Date:</strong></label><input type="date" id="insert_card_expiry_date" name="insert_card_expiry_date" required>
+                <br><br>
+                <label><strong>Security Code:</strong></label><input type="text" id="insert_security_code" name="insert_security_code" required>
+                <label><strong>Phone Number:</strong></label><input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="insert_phone_number" name="insert_phone_number" required>
+                <label><strong>Email Address:</strong></label><input type="text" id="insert_email_address" name="insert_email_address" required>
+            </fieldset>
+            <button type="submit" class="addButtons">Add Card Information</button>
+    </form>
+</div>
+
+<!-- Displays form for UPDATE functionality -->
+<section>
+    <br>
+    <form id="updateCardInformationForm" method="post">
+        <legend><strong>Update Card Information:</strong></legend>
+        <fieldset>
+            <div class="updateCardInformation">
+                <label for="updateCard_Info_ID"><strong>Card Information ID:</strong></label>
+                <input type="number" name="updateCard_Info_ID" id="updateCard_Info_ID" value="" required disabled>
+            </div>
+            <div class="updateCardInformation">
+                <label for="updateFirst_Name"><strong>First Name:</strong></label>
+                <input type="text" name="updateFirst_Name" id="updateFirst_Name" value="" required disabled>
+            </div>
+            <div class="updateCardInformation">
+                <label for="updateLast_Name"><strong>Last Name:</strong></label>
+                <input type="text" name="updateLast_Name" id="updateLast_Name" value="" required disabled>
+            </div>
+             <div class="updateCardInformation">
+                <label for="updateStreet_Address"><strong>Street Address:</strong></label>
+                <input type="text" name="updateStreet_Address" id="updateStreet_Address" value="" required disabled>
+            </div>
+            <div class="updateCardInformation">
+                <label for="updateCity_Name"><strong>City Name:</strong></label>
+                <input type="text" name="updateCity_Name" id="updateCity_Name" value="" required disabled>
+            </div>
+            <div class="updateCardInformation">
+                <label for="updateState_Code"><strong>State Code:</strong></label>
+                <input type="text" name="updateState_Code" id="updateState_Code" value="" required disabled>
+            </div>
+            <div class="updateCardInformation">
+                <label for="updateZIP_Code"><strong>ZIP Code:</strong></label>
+                <input type="text" name="updateZIP_Code" id="updateZIP_Code" value="" required disabled>
+            </div>
+            <div class="updateCardInformation">
+                <label for="updateCard_Number"><strong>Card Number:</strong></label>
+                <input type="text" name="updateCard_Number" id="updateCard_Number" value="" required disabled>
+            </div>
+            <div class="updateCardInformation">
+                <label for="updateExpiryDate"><strong>Card Expiry Date:</strong></label>
+                <input type="date" name="updateExpiryDate" id="updateExpiryDate" value="" required disabled>
+            </div>
+            <div class="updateCardInformation">
+                <label for="updateSecurity_Code"><strong>Security Code:</strong></label>
+                <input type="text" name="updateSecurity_Code" id="updateSecurity_Code" value="" required disabled>
+            </div>
+            <div class="updateCardInformation">
+                <label for="updatePhone_Number"><strong>Phone Number:</strong></label>
+                <input disabled type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="updatePhone_Number" id="updatePhone_Number" value="">
+            </div>
+            <div class="updateCardInformation">
+                <label for="updateEmail_Address"><strong>Email Address:</strong></label>
+                <input disabled type="text" name="updateEmail_Address" id="updateEmail_Address" value="">
+            </div>
+        </fieldset>
+        <button id="updateCardInformationButton" style="display:none" class="addButtons">Update Card Information</button>
+    </form>
+</section>
+<footer>
+    <p>&copy; 2023 Beaver Motors Car Rentals</p>
+</footer>
+
+<!-- Page scripts -->
+<script src="./js/add_card_information.js"></script>
+<script src="./js/delete_card_information.js"></script>
+<script src="./js/update_card_information.js"></script>
+<script src="./js/interactions.js"></script>

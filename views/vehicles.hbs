@@ -1,0 +1,136 @@
+<!--
+Adapted from CS340 Starter Application GitHub
+Safonte, D & Curry, M (May 2023)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%203%20-%20Integrating%20a%20Templating%20Engine%20(Handlebars)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%204%20-%20Dynamically%20Displaying%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%207%20-%20Dynamically%20Deleting%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%208%20-%20Dynamically%20Updating%20Data
+-->
+
+<!-- vehicles.hbs -->
+
+<!-- Navigation -->
+<header>
+        <h1 class="sitename">BMCR Reservation Management System</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/reservations">Reservations</a>
+            <a href="/drivers">Drivers</a>
+            <a href="/cardinformation">Card Information</a>
+            <a href="/vehicles">Vehicles</a>
+            <a href="/branches">Branches</a>
+            <a href="/paymentmethods">Payment Methods</a>
+        </nav>
+</header>
+
+<!-- Display table and CRUD functionality -->
+<h1>Vehicles</h1>
+
+<!-- Table displays results of the SELECT query -->
+<table id="vehicles-table">
+    <thead>
+        <tr>
+            <th>Vehicle ID</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Production Year</th>
+            <th>Color</th>
+            <th>Plate Number</th>
+            <th>VIN</th>
+            <th>Mileage</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr data-value="{{this.Vehicle_ID}}">
+            <td class="Vehicle_ID">{{this.Vehicle_ID}}</td>
+            <td class="Make">{{this.Make}}</td>
+            <td class="Model">{{this.Model}}</td>
+            <td class="ProductionYear">{{this.Production_Year}}</td>
+            <td class="Color">{{this.Color}}</td>
+            <td class="PlateNumber">{{this.Plate_Number}}</td>
+            <td class="VinNumber">{{this.VIN_Number}}</td>
+            <td class="Mileage">{{this.Mileage}}</td>
+            <td><button onClick="updateVehicle({{this.Vehicle_ID}}); showButton('updateVehicleInformation');" class="editButtons">Edit</button></td>
+            <td><button onclick="deleteVehicle({{this.Vehicle_ID}})" class="cancelButtons">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<hr>
+
+<!-- Displays form for CREATE functionality -->
+<button onclick="showAdd('Vehicle')" class="addButtons">Add a new Vehicle</button>
+<button onClick="hideAdd('Vehicle')" class="cancelButtons">Cancel</button>
+<div id="insertVehicle" style="display:none">
+    <br>
+    <form id="addVehicleForm">
+        <legend><strong>Add a new Vehicle:</strong></legend>
+            <fieldset>
+                <label><strong>Make:</strong></label><input type="text" id="insert_make" name="insert_make" required>
+                <label><strong>Model:</strong></label><input type="text" id="insert_model" name="insert_model" required>
+                <label><strong>Production Year:</strong></label><input type="number" id="insert_production_year" name="insert_production_year" required>
+                <label><strong>Color:</strong></label><input type="text" id="insert_color" name="insert_color" required>
+                <br><br>
+                <label><strong>Plate Number:</strong></label><input type="text" id="insert_plate_number" name="insert_plate_number" required>
+                <label><strong>VIN Number:</strong></label><input type="text" id="insert_vin_number" name="insert_vin_number" required>
+                <label><strong>Mileage:</strong></label><input type="number" id="insert_mileage" name="insert_mileage" required>
+            </fieldset>
+            <button type="submit" class="addButtons">Add Vehicle</button>
+    </form>
+</div>
+
+<!-- Displays form for UPDATE functionality -->
+<section>
+    <br>
+    <form id="updateVehicleForm" method="post">
+        <legend><strong>Update Vehicle Information:</strong></legend>
+        <fieldset>
+            <div class="updateVehicle">
+                <label for="updateVehicleID"><strong>Vehicle ID:</strong></label>
+                <input type="number" name="updateVehicleID" id="updateVehicleID" value="" required disabled>
+            </div>
+            <div class="updateVehicle">
+                <label for="updateMake"><strong>Make:</strong></label>
+                <input type="text" name="updateMake" id="updateMake" value="" required disabled>
+            </div>
+            <div class="updateVehicle">
+                <label for="updateModel"><strong>Model:</strong></label>
+                <input type="text" name="updateModel" id="updateModel" value="" required disabled>
+            </div>
+            <div class="updateVehicle">
+                <label for="updateProductionYear"><strong>Production Year:</strong></label>
+                <input type="number" name="updateProductionYear" id="updateProductionYear" value="" required disabled>
+            </div>
+            <div class="updateVehicle">
+                <label for="updateColor"><strong>Color:</strong></label>
+                <input type="text" name="updateColor" id="updateColor" value="" required disabled>
+            </div>
+            <div class="updateVehicle">
+                <label for="updatePlateNumber"><strong>Plate Number:</strong></label>
+                <input type="text" name="updatePlateNumber" id="updatePlateNumber" value="" required disabled>
+            </div>
+            <div class="updateVehicle">
+                <label for="updateVinNumber"><strong>VIN:</strong></label>
+                <input type="text" name="updateVinNumber" id="updateVinNumber" value="" required disabled>
+            </div>
+            <div class="updateVehicle">
+                <label for="updateMileage"><strong>Mileage:</strong></label>
+                <input type="number" name="updateMileage" id="updateMileage" value="" required disabled>
+            </div>
+        </fieldset>
+        <button id="updateVehicleInformation" style="display:none" class="addButtons">Update Vehicle Information</button>
+    </form>
+</section>
+<footer>
+    <p>&copy; 2023 Beaver Motors Car Rentals</p>
+</footer>
+
+<!-- Page scripts -->
+<script src="./js/add_vehicle.js"></script>
+<script src="./js/delete_vehicle.js"></script>
+<script src="./js/update_vehicle.js"></script>
+<script src="./js/interactions.js"></script>

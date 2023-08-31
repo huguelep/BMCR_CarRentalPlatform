@@ -1,0 +1,262 @@
+/*
+Navigation bar CSS adapted from W3 Schools CSS tutorial. Color palette applied to other HTML elements (such as the buttons and footer).
+W3 Schools (May 2023)
+[Source] https://www.w3schools.com/howto/howto_js_topnav.asp
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400&display=swap');
+
+.sitename {
+    font-family: 'Dancing Script', cursive;
+    text-align: left;
+}
+
+h1 {
+    text-align: center;
+  }
+  
+
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    margin-bottom: 100px;
+    background-image: url("/img/background.jpg");
+    background-color: #F2F2EB;
+    color: #202E44;
+    padding-top: 50px;
+    padding-right: 80px;
+    padding-bottom: 50px;
+    padding-left: 80px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Style the top navigation bar */
+nav {
+    overflow: hidden;
+    background-color: #202E44;
+    
+}
+
+/* Style the navigation bar links */
+nav a {
+    float: left;
+    display: block;
+    color: #F2F2EB;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    transition: background 0.4s ease,color 0.4s ease;
+}
+
+
+/* Change color on hover */
+nav a:hover {
+    background-color: #A9BBC8;
+    color: #800000;
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+    font-family: 'Space Grotesk', sans-serif;
+    
+}
+
+table, th, td {
+    border: 1px transparent;
+    padding: 10px;
+    text-align: center;
+}
+
+  
+tbody tr:nth-child(odd) {
+    background-color: #A9BBC8;
+    color: #202E44;
+  }
+
+tbody tr:nth-child(even) {
+    background-color:	#bac8d3;
+    color: #202E44;
+  }
+
+
+thead {
+    background-color:#202E44 ;
+    color: #F2F2EB;
+    font-size: 15px;
+    font-weight: 400;
+    padding-left: 10px
+}
+
+
+button {
+    background-color: #88734c;
+    color: #F2F2EB;
+    margin: 5px;
+}
+
+/* button:hover {
+    background-color: #202E44; black
+    background-color: #0070f3;
+    color: white;
+} */
+
+footer {
+    background-color: #202E44;
+    color: #F2F2EB;
+    position: fixed;
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+
+
+.addButtons{
+    
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    border: none;
+    padding: 0 20px;
+    height: 40px;
+    line-height: 10px;
+    border-radius: 7px;
+    background-color: #202E44;
+    color: F2F2EB;
+    font-weight: 400;
+    font-size: 16px;
+    box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+    transition: background 0.2s ease,color 0.2s ease,box-shadow 0.2s ease;    
+}
+
+.addButtons:hover{
+    background-color: #0070f3;
+    color: #F2F2EB;
+}
+
+.cancelButtons{
+    cursor: pointer;
+    outline: 0;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: 7px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    color: #202E44;
+    border-color: #202E44;
+    transition: background 0.4s ease,color 0.4s ease;
+}
+
+.cancelButtons:hover{
+    color: #fff;
+    background-color: #202E44;
+    border-color: #202E44;
+}
+
+.editButtons{
+    cursor: pointer;
+    outline: 0;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    background-color: #202E44;
+    color:#F2F2EB;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: 7px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    border-color: #202E44;
+    transition: background 0.4s ease,color 0.4s ease;
+}
+
+
+.editButtons:hover{
+    color: #202E44;
+    background-color: transparent;
+    border-color: #202E44;
+}
+
+.driverResButtons{
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-weight: 400;
+    border-radius: 7px;
+    padding: 3px 3px;
+    border: 0;
+    color: #202E44;
+    background: transparent;
+    line-height: 1.15;
+    font-size: 1rem;
+}
+
+.driverResButtons:hover{
+    transition: all .1s ease;
+    box-shadow: 0 0 0 0 #F2F2EB, 0 0 0 3px #202E44;
+}
+
+/* --------------------------------------------- FORMS --------------------------------------------- */
+
+label {
+  display: inline-block;
+  width: 200px;
+  text-align: right;
+  padding: 15px;
+}
+
+
+input[type=text],  input[type=number],  input[type=date], input[type=tel], input[type=datetime-local] {
+    background-color: transparent;
+    color:#202E44;
+}
+  
+input[type=text]:focus,  input[type=number]:focus,  input[type=date]:focus, input[type=tel]:focus, input[type=datetime-local]:focus {
+    background-color: #bac8d3;
+    color:#202E44;
+    box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+}
+
+select {
+    background-color: transparent;
+    color:#202E44;
+}
+
+select:focus {
+    box-shadow: 0 4px 14px 0 rgb(0 118 255 / 39%);
+}
+
+select option {
+    background-color: #bac8d3;
+    color:#202E44;
+    
+}
+
+form {
+    box-sizing: border-box;
+    padding: 2rem;
+    border: None;
+    display: left;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    font-family: 'Space Grotesk', sans-serif;
+    background-color: transparent;
+  }
+
+  legend {
+    border: None;
+    color:#202E44;
+    padding: 10px;
+  }

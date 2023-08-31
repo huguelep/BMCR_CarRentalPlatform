@@ -1,0 +1,93 @@
+<!--
+Adapted from CS340 Starter Application GitHub
+Safonte, D & Curry, M (May 2023)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%203%20-%20Integrating%20a%20Templating%20Engine%20(Handlebars)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%204%20-%20Dynamically%20Displaying%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%207%20-%20Dynamically%20Deleting%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%208%20-%20Dynamically%20Updating%20Data
+-->
+
+<!-- paymentmethods.hbs -->
+
+<!-- Navigation -->
+<header>
+        <h1 class="sitename">BMCR Reservation Management System</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/reservations">Reservations</a>
+            <a href="/drivers">Drivers</a>
+            <a href="/cardinformation">Card Information</a>
+            <a href="/vehicles">Vehicles</a>
+            <a href="/branches">Branches</a>
+            <a href="/paymentmethods">Payment Methods</a>
+        </nav>
+</header>
+
+<!-- Display table and CRUD functionality -->
+<h1>Payment Methods</h1>
+
+<!-- Table displays results of the SELECT query -->
+<table id="payment-methods-table">
+    <thead>
+        <tr>
+            <th>Payment Method ID</th>
+            <th>Payment Method</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr data-value="{{this.Payment_Method_ID}}">
+            <td class="Payment_Method_ID">{{this.Payment_Method_ID}}</td>
+            <td class="Payment_Method">{{this.Payment_Method}}</td>
+            <td><button onClick="updatePayment({{this.Payment_Method_ID}}); showButton('updatePaymentInformation');" class="editButtons">Edit</button></td>
+            <td><button onclick="deletePaymentMethod({{this.Payment_Method_ID}})" class="cancelButtons">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<hr>
+
+<!-- Displays form for CREATE functionality -->
+<button onclick="showAdd('PaymentMethod')" class="addButtons">Add a new Payment Method</button>
+<button onClick="hideAdd('PaymentMethod')" class="cancelButtons">Cancel</button>
+<div id="insertPaymentMethod" style="display:none">
+    <br>
+    <form id="addPaymentMethodForm">
+        <legend><strong>Add a new Payment Method:</strong></legend>
+            <fieldset>
+                <label><strong>Payment Method:</strong></label><input type="text" id="insert_payment_method" name="insert_payment_method" required>
+            </fieldset>
+            <button type="submit" class="addButtons">Add Payment Method</button>
+    </form>
+</div>
+
+<!-- Displays form for UPDATE functionality -->
+<section>
+    <br>
+    <form id="updatePaymentMethodForm" method="post">
+        <legend><strong>Update Payment Method Information:</strong></legend>
+        <fieldset>
+            <div class="updatePayment">
+                <label for="UpdatePayment_Method_ID"><strong>Payment Method ID:</strong></label>
+                <input type="number" name="UpdatePayment_Method_ID" id="UpdatePayment_Method_ID" value="" required disabled>
+            </div>
+            <div class="updatePayment">
+                <label for="updatePayment_Method"><strong>Payment Method:</strong></label>
+                <input type="text" name="updatePayment_Method" id="updatePayment_Method" value="" required disabled>
+            </div>
+        </fieldset>
+        <button id="updatePaymentInformation" style="display:none" class="addButtons">Update Payment Information</button>
+    </form>
+</section>
+<footer>
+    <p>&copy; 2023 Beaver Motors Car Rentals</p>
+</footer>
+
+<!-- Page scripts -->
+<script src="./js/add_payment_method.js"></script>
+<script src="./js/delete_payment_method.js"></script>
+<script src="./js/update_payment_methods.js"></script>
+<script src="./js/interactions.js"></script>

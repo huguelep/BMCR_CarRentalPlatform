@@ -1,0 +1,128 @@
+<!--
+Adapted from CS340 Starter Application GitHub
+Safonte, D & Curry, M (May 2023)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%203%20-%20Integrating%20a%20Templating%20Engine%20(Handlebars)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%204%20-%20Dynamically%20Displaying%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%207%20-%20Dynamically%20Deleting%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%208%20-%20Dynamically%20Updating%20Data
+-->
+
+<!-- driversreservations.hbs -->
+
+<!-- Navigation -->
+<header>
+        <h1 class="sitename">BMCR Reservation Management System</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/reservations">Reservations</a>
+            <a href="/drivers">Drivers</a>
+            <a href="/cardinformation">Card Information</a>
+            <a href="/vehicles">Vehicles</a>
+            <a href="/branches">Branches</a>
+            <a href="/paymentmethods">Payment Methods</a>
+        </nav>
+</header>
+
+<!-- Display table and CRUD functionality -->
+<h1>Drivers on Reservation</h1>
+
+<!-- Table displays results of the SELECT query -->
+<table id="drivers-reservations-table">
+    <thead>
+        <tr>
+            <th>Driver Reservation ID</th>
+            <th>Driver ID</th>
+            <th>Reservation ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of Birth</th>
+            <th>License State Code</th>
+            <th>License Number</th>
+            <th>License Expiry Date</th>
+            <th>Insurance Provider</th>
+            <th>Insurance Policy Number</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr data-value="{{this.Driver_Reservation_ID}}">
+            <td class="Driver_Reservation_ID">{{this.Driver_Reservation_ID}}</td>
+            <td class="Driver_ID">{{this.Driver_ID}}</td>
+            <td class="Reservation_ID">{{this.Reservation_ID}}</td>
+            <td class="First_Name">{{this.First_Name}}</td>
+            <td class="Last_Name">{{this.Last_Name}}</td>
+            <td class="Date_of_Birth">{{this.Date_of_Birth}}</td>
+            <td class="License_State_Code">{{this.License_State_Code}}</td>
+            <td class="License_Number">{{this.License_Number}}</td>
+            <td class="License_Expiry_Date">{{this.License_Expiry_Date}}</td>
+            <td class="Insurance_Provider">{{this.Insurance_Provider}}</td>
+            <td class="Insurance_Policy_Number">{{this.Insurance_Policy_Number}}</td>
+            <td><button onClick="updateDriverReservation({{this.Driver_Reservation_ID}}); showButton('updateDriverReservationInformation');" class="editButtons">Edit</button></td>
+            <td><button onclick="deleteDriverReservation({{this.Driver_Reservation_ID}})" class="cancelButtons">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<hr>
+
+<!-- Displays form for CREATE functionality -->
+<button onclick="showAdd('DriverReservation')" class="addButtons">Add a new Driver to this Reservation</button>
+<button onClick="hideAdd('DriverReservation')" class="cancelButtons">Cancel</button>
+<button onclick="location.href='/reservations'" class="addButtons">Back</button>
+<div id="insertDriverReservation" style="display:none">
+    <br>
+    <form id="addDriverReservationForm">
+        <legend><strong>Add a new Driver to this Reservation:</strong></legend>
+            <fieldset>
+                <label><strong>Driver:</strong></label>
+                <select name="insert_Driver" id="insert_Driver" required>
+                    <option value="">Select Driver</option>
+                    {{#each Driver_Information}}
+                    <option value="{{this.Driver_ID}}">{{this.Driver_Information}}</option>
+                    {{/each}}
+                </select>
+                <input type="hidden" name="Reservation_ID" id="Reservation_ID" value="{{Reservation_ID.[0]}}">
+            </fieldset>
+            <button type="submit" class="addButtons">Add Driver</button>
+    </form>
+</div>
+
+<!-- Displays form for UPDATE functionality -->
+<section>
+    <br>
+    <form id="updateDriverReservationForm" method="post">
+        <legend><strong>Update Driver on this Reservation:</strong></legend>
+        <fieldset>
+            <div class="updateDriverReservation">
+                <label for="updateDriverReservationID"><strong>Driver Reservation ID:</strong></label>
+                <input type="number" name="updateDriverReservationID" id="updateDriverReservationID" value="" required disabled>
+            </div>
+            <div class="updateDriverReservation">
+                <label for="updateReservationID"><strong>Reservation ID:</strong></label>
+                <input type="number" name="updateReservationID" id="updateReservationID" value="" required disabled>
+            </div>
+            <div class="updateDriverReservation">
+                <label for="updateDriver"><strong>Driver:</strong></label>
+                <select name="updateDriver" id="updateDriver" required disabled>
+                    <option value="">Select Driver</option>
+                    {{#each Drivers}}
+                    <option value="{{this.Driver_ID}}">{{this.Driver_Information}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </fieldset>
+        <button id="updateDriverReservationInformation" style="display:none" class="addButtons">Update Driver Information</button>
+    </form>
+</section>
+<footer>
+    <p>&copy; 2023 Beaver Motors Car Rentals</p>
+</footer>
+
+<!-- Page scripts -->
+<script src="/js/add_driver_reservation.js"></script>
+<script src="/js/delete_driver_reservation.js"></script>
+<script src="/js/update_driver_reservation.js"></script>
+<script src="/js/interactions.js"></script>

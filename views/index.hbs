@@ -1,0 +1,78 @@
+<!--
+Adapted from CS340 Starter Application GitHub
+Safonte, D & Curry, M (May 2023)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%203%20-%20Integrating%20a%20Templating%20Engine%20(Handlebars)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%204%20-%20Dynamically%20Displaying%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%207%20-%20Dynamically%20Deleting%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%208%20-%20Dynamically%20Updating%20Data
+-->
+
+<!-- index.hbs -->
+
+<!-- Navigation -->
+<header>
+    <h1 class="sitename">BMCR Reservation Management System</h1>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/reservations">Reservations</a>
+        <a href="/drivers">Drivers</a>
+        <a href="/cardinformation">Card Information</a>
+        <a href="/vehicles">Vehicles</a>
+        <a href="/branches">Branches</a>
+        <a href="/paymentmethods">Payment Methods</a>
+    </nav>
+</header>
+
+<!-- Index page and links -->
+<main>
+    <section>
+        <h2>Welcome!</h2>
+        <article id="intro" class="">
+            <p>
+                This page provides an overview for the <strong>Beaver Motors Car Rental</strong> Reservation Management System,
+                including brief descriptions of the functionalities that each page provides.
+            </p>
+        </article>
+        <hr>
+        <article>
+            <article id="reservations">
+                <h3><a href="/reservations">Reservations</a></h3>
+                <p>Contains data on all the reservations that have been made.</p>
+            </article>
+        </article>
+        <article>
+            <article id="drivers">
+                <h3><a href="/drivers">Drivers</a></h3>
+                <p>Contains data on all the drivers to have ever been on a reservation.</p>
+            </article>
+        </article>
+        <article>
+            <article id="cardinformation">
+                <h3><a href="/cardinformation">Card Information</a></h3>
+                <p>Contains data on customer credit card information stored on file.</p>
+            </article>
+        </article>
+        <article>
+            <article id="branches">
+                <h3><a href="/branches">Branches</a></h3>
+                <p>Contains data on the various branch locations that the company operates.</p>
+            </article>
+        </article>
+        <article>
+            <article id="vehicles">
+                <h3><a href="/vehicles">Vehicles</a></h3>
+                <p>Contains data on the vehicle inventory of the company.</p>
+            </article>
+        </article>
+        <article>
+            <article id="paymentmethods">
+                <h3><a href="/paymentmethods">Payment Methods</a></h3>
+                <p>Contains data on the acceptable payment methods for making a reservation.</p>
+            </article>
+        </article>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2023 Beaver Motors Car Rentals</p>
+</footer>

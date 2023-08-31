@@ -1,0 +1,183 @@
+<!--
+Adapted from CS340 Starter Application GitHub
+Safonte, D & Curry, M (May 2023)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%203%20-%20Integrating%20a%20Templating%20Engine%20(Handlebars)
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%204%20-%20Dynamically%20Displaying%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%205%20-%20Adding%20New%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%207%20-%20Dynamically%20Deleting%20Data
+[Source] https://github.com/osu-cs340-ecampus/nodejs-starter-app/tree/main/Step%208%20-%20Dynamically%20Updating%20Data
+-->
+
+<!-- reservations.hbs -->
+
+<!-- Navigation -->
+<header>
+        <h1 class="sitename">BMCR Reservation Management System</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/reservations">Reservations</a>
+            <a href="/drivers">Drivers</a>
+            <a href="/cardinformation">Card Information</a>
+            <a href="/vehicles">Vehicles</a>
+            <a href="/branches">Branches</a>
+            <a href="/paymentmethods">Payment Methods</a>
+        </nav>
+</header>
+
+<!-- Display table and CRUD functionality -->
+<h1>Reservations</h1>
+
+<!-- Table displays results of the SELECT query -->
+<table id="reservations-table">
+    <thead>
+        <tr>
+            <th>Reservation ID</th>
+            <th>Reservation Start</th>
+            <th>Reservation End</th>
+            <th>Total Due</th>
+            <th>Payment Method</th>
+            <th>Customer Card Information</th>
+            <th>Branch Location</th>
+            <th>Rental Vehicle</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr data-value="{{this.Reservation_ID}}">
+            <td class="Reservation_ID">{{this.Reservation_ID}}</td>
+            <td class="Reservation_Begin">{{this.Reservation_Begin}}</td>
+            <td class="Reservation_End">{{this.Reservation_End}}</td>
+            <td class="Payment_Total">{{this.Payment_Total}}</td>
+            <td data-PaymentMethodID="{{this.Payment_Method_ID}}" class="Payment_Method">{{this.Payment_Method}}</td>
+            <td data-CustomerCardInfoID="{{this.Customer_Card_Information_ID}}" class="Customer_Card_Information">{{this.Customer_Card_Information}}</td>
+            <td data-BranchLocationID="{{this.Branch_Location_ID}}" class="Branch_Location">{{this.Branch_Location}}</td>
+            <td data-RentalVehicleID="{{this.Rental_Vehicle_ID}}" class="Rental_Vehicle">{{this.Rental_Vehicle}}</td>
+            <td><button onClick="updateReservation({{this.Reservation_ID}}); showButton('updateReservationInformation');" class="editButtons">Edit</button></td>
+            <td><button onclick="deleteReservation({{this.Reservation_ID}})" class="cancelButtons">Delete</button></td>
+            <td><button onclick="location.href='/driversreservations/{{this.Reservation_ID}}'" class="editButtons">View Drivers on Reservation</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<hr>
+
+<!-- Displays form for CREATE functionality -->
+<button onclick="showAdd('Reservation')" class="addButtons">Add a new Reservation</button>
+<button onClick="hideAdd('Reservation')" class="cancelButtons">Cancel</button>
+<div id="insertReservation" style="display:none">
+    <br>
+    <form id="addReservationForm">
+        <legend><strong>Add a new Reservation:</strong></legend>
+            <fieldset>
+                <label><strong>Reservation Begin:</strong></label><input type="datetime-local" id="insert_reservation_begin" name="insert_reservation_begin" required>
+                <label><strong>Reservation End:</strong></label><input type="datetime-local" id="insert_reservation_end" name="insert_reservation_end" required>
+                <label><strong>Payment Total:</strong></label><input type="number" step="0.01" id="insert_payment_total" name="insert_payment_total" required>
+                <br>
+                <label><strong>Payment Method:</strong></label>
+                <select name="insert_payment_method" id="insert_payment_method" required>
+                    <option value="">Select Payment Method</option>
+                    {{#each payment_methods}}
+                    <option value="{{this.Payment_Method_ID}}">{{this.Payment_Method}}</option>"
+                    {{/each}}
+                </select>
+                <label><strong>Customer Card Information:</strong></label>
+                <select name="insert_customer_card_information" id="insert_customer_card_information" required>
+                    <option value="">Select Customer Card Information</option>
+                    {{#each customer_card_information}}
+                    <option value="{{this.card_info_id}}">{{this.Customer_Card_Information}}</option>"
+                    {{/each}}
+                </select>
+                <br><br>
+                <label><strong>Branch Location:</strong></label>
+                <select name="insert_branch_location" id="insert_branch_location" required>
+                    <option value="">Select Branch Location</option>
+                    {{#each branch_locations}}
+                    <option value="{{this.branch_id}}">{{this.Branch_Location}}</option>"
+                    {{/each}}
+                </select>
+                <label><strong>Rental Vehicle:</strong></label>
+                <select name="insert_rental_vehicle" id="insert_rental_vehicle">
+                    <option value="">Select Rental Vehicle</option>
+                    {{#each rental_vehicles}}
+                    <option value="{{this.vehicle_id}}">{{this.Rental_Vehicle}}</option>"
+                    {{/each}}
+                </select>
+            </fieldset>
+            <button type="submit" class="addButtons">Add Reservation</button>
+    </form>
+</div>
+
+<!-- Displays form for UPDATE functionality -->
+<section>
+    <br>
+    <form id="updateReservationForm" method="post">
+        <legend><strong>Update Reservation Information:</strong></legend>
+        <fieldset>
+            <div class="updateReservation">
+                <label for="updateReservationID"><strong>Reservation ID:</strong></label>
+                <input type="number" name="updateReservationID" id="updateReservationID" value="" required disabled>
+            </div>
+            <div class="updateReservation">
+                <label for="updateReservationBegin"><strong>Reservation Begin:</strong></label>
+                <input type="datetime-local" name="updateReservationBegin" id="updateReservationBegin" value="" required disabled>
+            </div>
+            <div class="updateReservation">
+                <label for="updateReservationEnd"><strong>Reservation End:</strong></label>
+                <input type="datetime-local" name="updateReservationEnd" id="updateReservationEnd" value="" required disabled>
+            </div>
+            <div class="updateReservation">
+                <label for="updatePaymentTotal"><strong>Payment Total:</strong></label>
+                <input type="number" step="0.01" name="updatePaymentTotal" id="updatePaymentTotal" value="" required disabled>
+            </div>
+            <div class="updateReservation">
+                <label for="updatePaymentMethod"><strong>Payment Method:</strong></label>
+                <select name="updatePaymentMethod" id="updatePaymentMethod" required disabled>
+                    <option value="">Select Payment Method</option>
+                    {{#each payment_methods}}
+                    <option value="{{this.Payment_Method_ID}}">{{this.Payment_Method}}</option>"
+                    {{/each}}
+                </select>
+            </div>
+            <div class="updateReservation">
+                <label for="updateCustomerCardInformation"><strong>Customer Card Information:</strong></label>
+                <select name="updateCustomerCardInformation" id="updateCustomerCardInformation" required disabled>
+                    <option value="">Select Customer Card Information</option>
+                    {{#each customer_card_information}}
+                    <option value="{{this.card_info_id}}">{{this.Customer_Card_Information}}</option>"
+                    {{/each}}
+                </select>
+            </div>
+            <div class="updateReservation">
+                <label for="updateBranchLocation"><strong>Branch Location:</strong></label>
+                <select name="updateBranchLocation" id="updateBranchLocation" required disabled>
+                    <option value="">Select Branch Location</option>
+                    {{#each branch_locations}}
+                    <option value="{{this.branch_id}}">{{this.Branch_Location}}</option>"
+                    {{/each}}
+                </select>
+            </div>
+            <div class="updateReservation">
+                <label for="updateRentalVehicle"><strong>Rental Vehicle:</strong></label>
+                <select name="updateRentalVehicle" id="updateRentalVehicle" disabled>
+                    <option value="">Select Rental Vehicle</option>
+                    {{#each rental_vehicles}}
+                    <option value="{{this.vehicle_id}}">{{this.Rental_Vehicle}}</option>"
+                    {{/each}}
+                </select>
+            </div>
+        </fieldset>
+        <button id="updateReservationInformation" style="display:none" class="addButtons">Update Reservation Information</button>
+    </form>
+</section>
+<footer>
+    <p>&copy; 2023 Beaver Motors Car Rentals</p>
+</footer>
+
+<!-- Page scripts -->
+<script src="./js/add_reservation.js"></script>
+<script src="./js/delete_reservation.js"></script>
+<script src="./js/update_reservation.js"></script>
+<script src="./js/interactions.js"></script>
