@@ -1,1 +1,1 @@
-# BMCR_CarRentalPlatform
+# BMCR - Car Rental Platform
